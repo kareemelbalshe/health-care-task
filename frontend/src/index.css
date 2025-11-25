@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap");
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+@layer base {
+  *{
+    box-sizing: border-box;
+  }
+  body {
+    @apply bg-blue-50;
+    font-family: "Cairo", sans-serif;
+  }
+.ulDashboard a {
+    @apply flex items-center justify-center gap-5 transition-all duration-300 ease-in-out hover:translate-x-2;
+  }
+  
+}
