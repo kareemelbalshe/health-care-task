@@ -44,9 +44,9 @@ export default function Login() {
 
   useEffect(() => {
     if (isAuthenticated && user) {
-      if (user.role === "doctor") navigate("/doctor/dashboard");
-      else if (user.role === "finance") navigate("/finance/dashboard");
-      else navigate("/dashboard/patient");
+      if (user.role === "doctor") navigate(`/dashboard/doctor/Profile`);
+      else if (user.role === "finance") navigate("/dashboard/finance/visits");
+      else navigate("/dashboard/patient/visits");
     }
   }, [isAuthenticated, user, navigate]);
 
@@ -64,10 +64,11 @@ export default function Login() {
           })
         ).unwrap();
 
-        if (result?.user?.role === "doctor") navigate("/dashboard/doctor");
+        if (result?.user?.role === "doctor")
+          navigate(`/dashboard/doctor/Profile`);
         else if (result?.user?.role === "finance")
-          navigate("/dashboard/finance");
-        else navigate("/dashboard/patient");
+          navigate("/dashboard/finance/visits");
+        else navigate("/dashboard/patient/visits");
       } catch (error: any) {
         toast.error(error?.message || "Login failed");
       }

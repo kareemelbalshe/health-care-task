@@ -1,99 +1,33 @@
 import express from "express";
-import Treatment from "../models/Medicine.js";
-import Visit from "../models/Visit.js";
+import {
+  createMedicine,
+  deleteMedicine,
+  getMedicinesToVisit,
+  updateMedicine,
+} from "../controller/medicine.controller.js";
+import { requireRole, verifyToken } from "../middleware/verifyToken.js";
+import { validate } from "../middleware/validate.js";
+import { MedicineSchema } from "../Joi/medicine.joi.js";
 
 const router = express.Router();
 
-// router.get("/:id", auth, async (req, res) => {
-//   try {
-//     const treatment = await Treatment.findById(req.params.id);
+router.get("/:visitId", verifyToken, getMedicinesToVisit);
 
-//     if (!treatment) {
-//       return res.status(404).json({ message: "Treatment not found" });
-//     }
+router.post(
+  "/:visitId",
+  verifyToken,
+  requireRole("doctor"),
+  validate(MedicineSchema),
+  createMedicine
+);
 
-//     res.json(treatment);
-//   } catch (error) {
-//     res.status(500).json({ message: "Server error", error: error.message });
-//   }
-// });
+router.put(
+  "/:id",
+  requireRole("doctor"),
+  validate(MedicineSchema),
+  updateMedicine
+);
 
-// router.post("/", auth, async (req, res) => {
-//   try {
-//     if (req.user.role !== "doctor") {
-//       return res
-//         .status(403)
-//         .json({ message: "Only doctors can create treatments" });
-//     }
-
-//     const { visitId, name, amount, description, cost } = req.body;
-
-//     const visit = await Visit.findOne({ _id: visitId });
-
-//     if (!visit) {
-//       return res.status(404).json({ message: "Visit not found" });
-//     }
-
-//     const treatment = await Treatment.create({
-//       visitId,
-//       name,
-//       amount,
-//       description,
-//       cost,
-//     });
-
-//     await treatment.populate("visitId", "_id");
-
-//     res.status(201).json(treatment);
-//   } catch (error) {
-//     res.status(500).json({ message: "Server error", error: error.message });
-//   }
-// });
-
-// router.put("/:id", auth, async (req, res) => {
-//   try {
-//     if (req.user.role !== "doctor") {
-//       return res
-//         .status(403)
-//         .json({ message: "Only doctors can update treatments" });
-//     }
-
-//     const treatment = await Treatment.findByIdAndUpdate(
-//       req.params.id,
-//       { $set: req.body },
-//       { new: true }
-//     );
-
-//     if (!treatment) {
-//       return res.status(404).json({ message: "Treatment not found" });
-//     }
-
-//     res.json(treatment);
-//   } catch (error) {
-//     res.status(500).json({ message: "Server error", error: error.message });
-//   }
-// });
-
-// router.delete("/:id", auth, async (req, res) => {
-//   try {
-//     if (req.user.role !== "doctor") {
-//       return res
-//         .status(403)
-//         .json({ message: "Only doctors can delete treatments" });
-//     }
-
-//     const treatment = await Treatment.findByIdAndDelete(req.params.id);
-
-//     if (!treatment) {
-//       return res.status(404).json({ message: "Treatment not found" });
-//     }
-
-//     res.json(treatment);
-//   } catch (error) {
-//     res.status(500).json({ message: "Server error", error: error.message });
-//   }
-// });
-
-// router.get("/total_cost_for_visit/:id", auth, );
+router.delete("/:id",verifyToken, requireRole("doctor"), deleteMedicine);
 
 export default router;

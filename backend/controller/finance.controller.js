@@ -13,7 +13,7 @@ export const createFinance = asyncHandler(async (req, res) => {
     }
 
     const user = await User.create({
-      name,
+      username:name,
       email,
       password,
       role: "finance",
@@ -30,13 +30,13 @@ export const createFinance = asyncHandler(async (req, res) => {
   }
 });
 
-export const getCostMetricsToVisit = asyncHandler(async (req, res) => {
+export const getCostMedicinesToVisit = asyncHandler(async (req, res) => {
   try {
     const medicines = await Medicine.find({
-      visitId: req.params.id,
+      visitId: req.params.visitId,
     });
 
-    const totalCost = treatments.reduce((total, treatment) => {
+    const totalCost = medicines.reduce((total, treatment) => {
       return total + treatment.cost;
     }, 0);
 

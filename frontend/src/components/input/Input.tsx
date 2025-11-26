@@ -10,7 +10,7 @@ interface InputProps {
   setValue?: (e: any) => void;
   required?: boolean;
   disabled?: boolean;
-  type?: "text" | "email" | "password";
+  type?: "text" | "email" | "password" | "number" | "date" | "time";
   labelColor?: string;
   border?: string;
   rounded?: string;

@@ -5,6 +5,7 @@ import { PiEyeDuotone } from "react-icons/pi";
 import { LuPencilLine } from "react-icons/lu";
 import { IoMdAdd } from "react-icons/io";
 import { useMemo } from "react";
+import { ImCancelCircle } from "react-icons/im";
 
 interface TableProps {
   thead: string[];
@@ -20,6 +21,8 @@ interface TableProps {
   linkEdit?: string;
   del?: boolean;
   handleDelete?: (id: string) => void;
+  canc?: boolean;
+  handleCancel?: (id: string) => void;
 }
 
 export default function AnyTable({
@@ -35,12 +38,14 @@ export default function AnyTable({
   linkEdit,
   del = false,
   handleDelete,
+  canc = false,
+  handleCancel,
 }: TableProps) {
   const navigate = useNavigate();
 
   const renderActions = useMemo(() => {
     return (row: any) => (
-      <td className="p-2 w-[250px] flex items-center gap-2 justify-around">
+      <td className="p-2 min-w-[250px] flex items-center gap-2 justify-around">
         {view && (
           <Button
             className="btn-sm px-2 py-2"
@@ -65,10 +70,35 @@ export default function AnyTable({
             onClick={() => handleDelete && handleDelete(row?._id)}
           />
         )}
+        {canc && (
+          <Button
+            text={"cancel"}
+            className=""
+            icon={<ImCancelCircle  />}
+            onClick={() => handleCancel && handleCancel(row?._id)}
+          />
+        )}
       </td>
     );
-  }, [view, edit, del, linkView, linkEdit, handleDelete, navigate]);
-  
+  }, [
+    view,
+    edit,
+    del,
+    linkView,
+    linkEdit,
+    handleDelete,
+    navigate,
+    canc,
+    handleCancel,
+  ]);
+
+  const getNestedValue = (obj: any, path: string) => {
+    if (!obj) return "N/A";
+    path = path.replace(/\[(.*?)\]/g, ".$1");
+    return path.split(".").reduce((acc: any, key: string) => {
+      return acc && acc[key] !== undefined ? acc[key] : "N/A";
+    }, obj);
+  };
 
   return (
     <>
@@ -88,11 +118,11 @@ export default function AnyTable({
             )}
           </div>
         )}
-        <div className="border border-amber-400 mb-5 w-full"></div>
+        <div className="border border-blue-400 mb-5 w-full"></div>
         <div className={`relative`}>
-          <table className="w-full border-collapse border-2 border-amber-400">
+          <table className="w-full border-collapse border-2 border-blue-400">
             <thead>
-              <tr className="border-2 border-amber-400">
+              <tr className="border-2 border-blue-400">
                 {thead?.map((header, index) => (
                   <th key={index} className={`p-3`}>
                     <span className="">{`${header}`}</span>
@@ -103,7 +133,7 @@ export default function AnyTable({
             </thead>
             <tbody>
               {tbodys?.map((row, rowIndex) => (
-                <tr key={rowIndex} className={`border-2 border-amber-400`}>
+                <tr key={rowIndex} className={`border-2 border-blue-400`}>
                   {headerData?.map((header, index) => (
                     <td
                       key={index}
@@ -116,13 +146,14 @@ export default function AnyTable({
                           className="w-10 h-10 mx-auto rounded-full bg-cover bg-center"
                           loading="lazy"
                         />
-                      ) : header === "section" ? (
+                      ) : header === "createdAt" ? (
                         <span className="block max-w-xs px-2 overflow-hidden text-ellipsis whitespace-nowrap">
-                          {row?.[header]?.title || "No Title"}
+                          {new Date(row?.[header]).toLocaleDateString()}{" "}
+                          {new Date(row?.[header]).toLocaleTimeString()}
                         </span>
                       ) : (
                         <span className="block max-w-xs px-2 overflow-hidden text-ellipsis whitespace-nowrap">
-                          {row?.[header] || "N/A"}
+                          {getNestedValue(row, header)}
                         </span>
                       )}
                     </td>

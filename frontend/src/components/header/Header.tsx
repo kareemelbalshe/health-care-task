@@ -1,18 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type { AppDispatch, RootState } from "../../lib/redux/store";
 import Button from "../button/Button";
 import { logout } from "../../lib/redux/slices/authSlice";
 
 export default function Header() {
   const dispatch = useDispatch<AppDispatch>();
-
+ const navigate=useNavigate();
   const { isAuthenticated, user } = useSelector(
     (state: RootState) => state.auth
   );
 
   const logoutHandler = () => {
     dispatch(logout());
+    navigate('/');
   };
   return (
     <header className="w-full fixed h-20 top-0 left-0 z-10 p-5 flex items-center justify-between bg-blue-500 border-b-4 border-b-blue-800 text-white">
@@ -26,7 +27,7 @@ export default function Header() {
             <li>
               <Link
                 className="bg-blue-700 px-4 py-2.5 rounded-xl"
-                to={`/dashboard/doctor`}
+                to={`/dashboard/doctor/profile`}
               >
                 Doctor Dashboard
               </Link>
@@ -36,7 +37,7 @@ export default function Header() {
             <li>
               <Link
                 className="bg-blue-700 px-4 py-2.5 rounded-xl"
-                to={`/dashboard/finance`}
+                to={`/dashboard/finance/visits`}
               >
                 Finance Dashboard
               </Link>
@@ -46,7 +47,7 @@ export default function Header() {
             <li>
               <Link
                 className="bg-blue-700 px-4 py-2.5 rounded-xl"
-                to={`/dashboard/patient`}
+                to={`/dashboard/patient/visits`}
               >
                 Patient Dashboard
               </Link>

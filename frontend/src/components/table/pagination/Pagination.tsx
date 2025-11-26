@@ -51,7 +51,7 @@ const Pagination = memo(({ page, lastPage, onPageChange }: PaginationProps) => {
     <div className="flex items-center gap-3">
       <span
         onClick={handlePrevious}
-        className={`h-[50px] w-[50px] flex items-center justify-center rounded-full bg-amber-400 cursor-pointer ${
+        className={`h-[50px] w-[50px] flex items-center justify-center rounded-full bg-blue-400 cursor-pointer ${
           page === 1 ? "opacity-50 cursor-not-allowed" : ""
         }`}
       >
@@ -62,7 +62,7 @@ const Pagination = memo(({ page, lastPage, onPageChange }: PaginationProps) => {
           key={pageNum}
           onClick={() => handleClick(pageNum + 1)}
           className={`h-[50px] w-[50px] flex items-center justify-center rounded-full cursor-pointer ${
-            activeIndex === pageNum ? "bg-amber-400" : "bg-gray-200 text-black"
+            activeIndex === pageNum ? "bg-blue-400" : "bg-gray-200 text-black"
           } ${activeIndex !== pageNum && "hidden md:flex"}`}
         >
           {pageNum + 1}
@@ -70,7 +70,7 @@ const Pagination = memo(({ page, lastPage, onPageChange }: PaginationProps) => {
       ))}
       <span
         onClick={handleNext}
-        className={`h-[50px] w-[50px] flex items-center justify-center rounded-full bg-amber-400 cursor-pointer ${
+        className={`h-[50px] w-[50px] flex items-center justify-center rounded-full bg-blue-400 cursor-pointer ${
           page === lastPage ? "opacity-50 cursor-not-allowed" : ""
         }`}
       >

@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.js';
-// import patientRoutes from './routes/patient.js';
+import userRoute from './routes/user.js';
 import doctorRoutes from './routes/doctor.js';
 import visitRoutes from './routes/visit.js';
 import financeRoutes from './routes/finance.js';
@@ -34,7 +34,7 @@ app.use(
 );
 
 app.use('/api/v1/auth', authRoutes);
-// app.use('/api/v1/patient', patientRoutes);
+app.use('/api/v1/user', userRoute);
 app.use('/api/v1/doctor', doctorRoutes);
 app.use('/api/v1/visit', visitRoutes);
 app.use('/api/v1/finance', financeRoutes);

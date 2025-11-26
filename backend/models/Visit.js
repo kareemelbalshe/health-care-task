@@ -14,11 +14,9 @@ const visitSchema = new mongoose.Schema(
     },
     startDate: {
       type: Date,
-      required: true,
     },
     endDate: {
       type: Date,
-      required: true,
     },
     status: {
       type: String,
@@ -40,13 +38,5 @@ const visitSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
-visitSchema.pre("save", function (next) {
-  this.totalAmount = this.treatments.reduce(
-    (total, treatment) => total + treatment.cost,
-    0
-  );
-  next();
-});
 
 export default mongoose.model("Visit", visitSchema);

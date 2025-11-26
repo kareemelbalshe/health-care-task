@@ -3,7 +3,17 @@ import User from "../models/User.js";
 
 export const getDoctorsByFilter = asyncHandler(async (req, res) => {
   try {
-    const { username, email, specialization, phone, address } = req.query;
+    const {
+      username,
+      email,
+      specialization,
+      phone,
+      address,
+      page = 1,
+      limit = 10,
+    } = req.query;
+
+    const skip = (page - 1) * limit;
 
     let filter = { role: "doctor" };
 
@@ -27,14 +37,21 @@ export const getDoctorsByFilter = asyncHandler(async (req, res) => {
       filter.address = { $regex: address, $options: "i" };
     }
 
-    const doctors = await User.find(filter).select(
-      "username email phone specialization address createdAt"
-    );
+    const total = await User.countDocuments(filter);
 
-    res.json({ success: true, count: doctors.length, doctors });
+    const doctors = await User.find(filter)
+      .select("username email phone specialization address createdAt")
+      .skip(skip)
+      .limit(parseInt(limit));
+
+    res.json({
+      success: true,
+      total,
+      page: Number(page),
+      totalPages: Math.ceil(total / limit),
+      doctors,
+    });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
-
-

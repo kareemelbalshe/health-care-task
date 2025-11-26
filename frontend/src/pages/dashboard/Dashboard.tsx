@@ -8,24 +8,27 @@ import { FaMoneyCheckDollar } from "react-icons/fa6";
 import { FaInfoCircle } from "react-icons/fa";
 import { MdMonetizationOn } from "react-icons/md";
 
-export default function ProtectedRoute() {
+export default function Dashboard() {
   const { isAuthenticated, user } = useSelector(
     (state: RootState) => state.auth
   );
 
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
   const sliderDoctorLinks = [
     {
-      path: "/profile",
-      label: "Profile",
+      path: "/dashboard/doctor/profile",
+      label: "profile",
       icon: <FaInfoCircle />,
     },
     {
-      path: "/patient-visits",
+      path: "/dashboard/doctor/visits",
       label: "Visits",
       icon: <IoCalendarSharp />,
     },
     {
-      path: "/finance",
+      path: "/dashboard/doctor/finance",
       label: "Finance",
       icon: <FaMoneyCheckDollar />,
     },
@@ -33,19 +36,14 @@ export default function ProtectedRoute() {
 
   const sliderFinanceLinks = [
     {
-      path: "/patient-visits",
+      path: "/dashboard/finance/visits",
       label: "Visits",
       icon: <IoCalendarSharp />,
-    },
-    {
-      path: "/finance",
-      label: "Finance",
-      icon: <MdMonetizationOn />,
     },
   ];
   const sliderPatientLinks = [
     {
-      path: "/my-visits",
+      path: "/dashboard/patient/visits",
       label: "visits",
       icon: <IoCalendarSharp />,
     },
@@ -59,15 +57,13 @@ export default function ProtectedRoute() {
       ? sliderFinanceLinks
       : sliderPatientLinks;
 
-  return isAuthenticated ? (
+  return (
     <div className="flex items-start justify-start">
       <Header />
       <DashboardSlider links={selectedLinks} />
-      <div className="w-full mt-20 h-[calc(100vh-80px)] overflow-y-scroll  hide-scrollbar">
+      <div className="w-full mt-20 h-[calc(100vh-80px)] overflow-y-scroll hide-scrollbar">
         <Outlet />
       </div>
     </div>
-  ) : (
-    <Navigate to="/login" replace />
   );
 }
