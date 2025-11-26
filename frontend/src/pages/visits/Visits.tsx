@@ -24,8 +24,6 @@ export default function Visits() {
     ? authUser?._id
     : authUser?.followDoctor;
 
-  console.log(doctorId);
-  console.log(visits);
   const [date, setDate] = useState("");
   const [patientName, setPatientName] = useState("");
   const [paymentStatus, setPaymentStatus] = useState("");

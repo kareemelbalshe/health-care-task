@@ -16,7 +16,6 @@ export default function VisitsToPatient() {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const patientId = useSelector((state: RootState) => state.auth.user.user?._id);
-  console.log(patientId);
   useEffect(() => {
     if (error) toast.error(error);
   }, [error]);
@@ -31,7 +30,6 @@ export default function VisitsToPatient() {
     );
   }, [dispatch, patientId, page, limit]);
 
-  console.log(patientVisits)
   return (
     <div className="mb-20 flex flex-col gap-5 w-full lg:items-center p-6">
         {loading && <Loader/>}

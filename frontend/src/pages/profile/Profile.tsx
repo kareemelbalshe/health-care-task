@@ -43,7 +43,6 @@ export default function Profile() {
     dispatch(handleGetUser({ id: profileId }));
   }, [dispatch, profileId]);
 
-  console.log(user);
   useEffect(() => {
     if (user) {
       setUsername(user.username || "");

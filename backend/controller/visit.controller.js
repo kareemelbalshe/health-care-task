@@ -143,7 +143,6 @@ export const createVisit = asyncHandler(async (req, res) => {
 export const updateVisit = asyncHandler(async (req, res) => {
   try {
     const { status, paymentStatus, cost, startDate, endDate } = req.body;
-    console.log(req.params.id);
     // const visitToSave = await Visit.findById(req.params.id);
     // if (!visitToSave) {
     //   return res.status(404).json({ message: "Visit not found" });

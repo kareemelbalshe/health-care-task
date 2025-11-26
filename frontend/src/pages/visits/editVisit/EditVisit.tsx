@@ -78,7 +78,6 @@ export default function EditVisit() {
       endDate: end.toISOString(),
     };
 
-    console.log(data)
 
     dispatch(handleUpdateVisit({ visitId: id!, data }))
   };
