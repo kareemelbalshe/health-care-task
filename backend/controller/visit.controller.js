@@ -22,7 +22,7 @@ export const getVisitsToDoctor = asyncHandler(async (req, res) => {
       filter.paymentStatus = paymentStatus;
     }
 
-    const selectedDate = date ? new Date(date) : new Date(); // ← هنا الديفولت
+    const selectedDate = date ? new Date(date) : new Date();
 
     const startOfDay = new Date(selectedDate);
     startOfDay.setHours(0, 0, 0, 0);
