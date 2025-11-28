@@ -14,6 +14,7 @@ export const getVisitsToDoctor = asyncHandler(async (req, res) => {
         role: "patient",
         username: { $regex: patientName, $options: "i" },
       });
+
       filter.patient = { $in: patients.map((p) => p._id) };
     }
 
@@ -21,25 +22,18 @@ export const getVisitsToDoctor = asyncHandler(async (req, res) => {
       filter.paymentStatus = paymentStatus;
     }
 
-    if (date) {
-      const selectedDate = new Date(date);
+    const selectedDate = date ? new Date(date) : new Date(); // ← هنا الديفولت
 
-      const startOfDay = new Date(selectedDate);
-      startOfDay.setHours(0, 0, 0, 0);
+    const startOfDay = new Date(selectedDate);
+    startOfDay.setHours(0, 0, 0, 0);
 
-      const endOfDay = new Date(selectedDate);
-      endOfDay.setHours(23, 59, 59, 999);
+    const endOfDay = new Date(selectedDate);
+    endOfDay.setHours(23, 59, 59, 999);
 
-      filter.$or = [
-        { startDate: null },
-        {
-          startDate: {
-            $gte: startOfDay,
-            $lte: endOfDay,
-          },
-        },
-      ];
-    }
+    filter.createdAt = {
+      $gte: startOfDay,
+      $lte: endOfDay,
+    };
 
     const visits = await Visit.find(filter)
       .populate("patient", "username email phone")
@@ -50,6 +44,8 @@ export const getVisitsToDoctor = asyncHandler(async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
+
+
 
 export const getVisitById = asyncHandler(async (req, res) => {
   try {
