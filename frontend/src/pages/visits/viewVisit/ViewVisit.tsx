@@ -33,12 +33,14 @@ export default function ViewVisit() {
   // Calculate total medicines cost
   const totalMedicineCost = useMemo(() => {
     if (!medicines || medicines.length === 0) return 0;
-    return medicines.reduce((acc, med) => acc + Number(med.cost || 0), 0);
+    return medicines.reduce(
+      (acc, med) => acc + Number(med.cost || 0) * Number(med.count),
+      0
+    );
   }, [medicines]);
 
   const doctorCost = visit?.cost || 0;
   const grandTotal = doctorCost + totalMedicineCost;
-
   return (
     <div>
       {loading && <Loader />}
@@ -71,10 +73,12 @@ export default function ViewVisit() {
             <strong>Doctor Cost:</strong> {doctorCost} EGP
           </p>
           <p>
-            <strong>Start Date:</strong> {visit.startDate}
+            <strong>Start Date:</strong>{" "}
+            {new Date(visit.startDate).toLocaleString()}
           </p>
           <p>
-            <strong>End Date:</strong> {visit.endDate}
+            <strong>Start Date:</strong>{" "}
+            {new Date(visit.endDate).toLocaleString()}
           </p>
 
           <p>

@@ -1,4 +1,5 @@
-import { Suspense, ComponentType, LazyExoticComponent } from "react";
+import { Suspense, type ComponentType, type LazyExoticComponent } from "react";
+
 import Loader from "../../components/loader/loader";
 
 const LazyWrapper = (Component: LazyExoticComponent<ComponentType<any>>) => {

@@ -69,7 +69,7 @@ export default function Home() {
 
       {/* CARDS */}
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
-        {doctors?.doctors?.map((doc) => (
+        {doctors?.doctors?.map((doc: any) => (
           <div
             key={doc._id}
             className="bg-white shadow-md rounded-2xl p-5 hover:shadow-lg transition cursor-pointer border border-gray-200"

@@ -20,9 +20,7 @@ export default function Visits() {
   const authUser = useSelector((state: RootState) => state.auth.user.user);
 
   const doctorId =
-  authUser?.role === "doctor"
-    ? authUser?._id
-    : authUser?.followDoctor;
+    authUser?.role === "doctor" ? authUser?._id : authUser?.followDoctor;
 
   const [date, setDate] = useState("");
   const [patientName, setPatientName] = useState("");
@@ -77,52 +75,52 @@ export default function Visits() {
           setValue={setPaymentStatus}
         />
       </div>
-
-      {/* Table */}
-      <AnyTable
-        tbodys={visits}
-        titleHeader="Visits"
-        thead={[
-          "Status",
-          "Payment Status",
-          "Cost",
-          "Created At",
-          "Start Date",
-          "End Date",
-          "Patient",
-          "Email",
-          "Phone",
-        ]}
-        headerData={[
-          "status",
-          "paymentStatus",
-          "cost",
-          "createdAt",
-          "startDate",
-          "endDate",
-          "patient.username",
-          "patient.email",
-          "patient.phone",
-        ]}
-        view={true}
-        linkView={
-          authUser?.user?.role === "doctor"
-            ? `/dashboard/doctor/view-visit/`
-            : `/dashboard/finance/view-visit/`
-        }
-        edit={true}
-        linkEdit={
-          authUser?.user?.role === "doctor"
-            ? `/dashboard/doctor/edit-visit/`
-            : `/dashboard/finance/edit-visit/`
-        }
-        canc={true}
-        handleCancel={(id: string) =>
-          dispatch(
-            handleUpdateVisitToPatient({ visitId: id, status: "canceled" })
-          )
-        }
-      />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+        <AnyTable
+          tbodys={visits}
+          titleHeader="Visits"
+          thead={[
+            "Status",
+            "Payment Status",
+            "Cost",
+            "Created At",
+            "Start Date",
+            "End Date",
+            "Patient",
+            "Email",
+            "Phone",
+          ]}
+          headerData={[
+            "status",
+            "paymentStatus",
+            "cost",
+            "createdAt",
+            "startDate",
+            "endDate",
+            "patient.username",
+            "patient.email",
+            "patient.phone",
+          ]}
+          view={true}
+          linkView={
+            authUser?.role === "doctor"
+              ? `/dashboard/doctor/view-visit`
+              : `/dashboard/finance/view-visit`
+          }
+          edit={true}
+          linkEdit={
+            authUser?.role === "doctor"
+              ? `/dashboard/doctor/edit-visit`
+              : `/dashboard/finance/edit-visit`
+          }
+          canc={true}
+          handleCancel={(id: string) =>
+            dispatch(
+              handleUpdateVisitToPatient({ visitId: id, status: "canceled" })
+            )
+          }
+        />
+      </div>
     </div>
   );
 }

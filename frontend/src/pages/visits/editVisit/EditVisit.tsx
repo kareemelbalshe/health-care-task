@@ -6,10 +6,10 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 
-import type { RootState, AppDispatch } from "../../redux/store";
 import { handleGetVisitById, handleUpdateVisit } from "../../../lib/redux/slices/visitSlice";
 import Input from "../../../components/input/Input";
 import Button from "../../../components/button/Button";
+import type { AppDispatch, RootState } from "../../../lib/redux/store";
 
 export default function EditVisit() {
   const dispatch = useDispatch<AppDispatch>();
@@ -83,7 +83,7 @@ export default function EditVisit() {
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 bg-white shadow-lg p-6 rounded-xl">
+    <div className="max-w-xl mx-auto mb-4 mt-4 bg-white shadow-lg p-6 rounded-xl">
       <h1 className="text-2xl font-bold mb-6 text-center">Edit Visit</h1>
 
       <form onSubmit={handleSubmit} className="space-y-5">
@@ -91,6 +91,7 @@ export default function EditVisit() {
           label="Cost"
           placeholder="Enter visit cost"
           type="number"
+          min={0}
           value={cost}
           setValue={(v) => setCost(Number(v))}
           required

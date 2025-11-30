@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "../../../lib/redux/store";
 import { toast } from "react-toastify";
 import { handleCreateFinance } from "../../lib/redux/slices/financeSlice";
 import Input from "../../components/input/Input";
 import Button from "../../components/button/Button";
+import type { AppDispatch, RootState } from "../../lib/redux/store";
 
 export default function CreateFinance() {
   const dispatch = useDispatch<AppDispatch>();
@@ -57,7 +57,7 @@ export default function CreateFinance() {
   }, [error]);
 
   return (
-    <div className="p-5 max-w-xl mx-auto">
+    <div className="p-5 max-w-xl mx-auto bg-white rounded-lg shadow-md mt-4">
       <h1 className="text-2xl font-bold mb-6">Create Finance User</h1>
 
       <form

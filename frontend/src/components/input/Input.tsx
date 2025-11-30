@@ -14,6 +14,8 @@ interface InputProps {
   labelColor?: string;
   border?: string;
   rounded?: string;
+  min?: number;
+  max?: number;
   error?: string;
 }
 
@@ -30,6 +32,8 @@ const Input = memo(function Input({
   labelColor = "",
   border = "border-[#5C5C5C]",
   rounded = "rounded-lg",
+  min,
+  max,
   error,
 }: InputProps) {
   const [valueInvalid, setValueInvalid] = useState(false);
@@ -50,7 +54,7 @@ const Input = memo(function Input({
     if (type === "password") {
       setType("password");
     } else {
-      setType("text");
+      setType(type);
     }
   }, [type]);
 
@@ -98,6 +102,8 @@ const Input = memo(function Input({
           onChange={handleInputChange}
           required={required}
           disabled={disabled}
+          min={min}
+          max={max}
         />
         {type === "password" && (
           <div

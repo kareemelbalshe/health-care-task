@@ -53,6 +53,10 @@ export default function AddMedicine() {
         cost: Number(cost),
       })
     );
+    setName("");
+    seCount("");
+    setDescription("");
+    setCost("");
   };
 
   useEffect(() => {
@@ -62,7 +66,7 @@ export default function AddMedicine() {
   return (
     <div>
       <form
-        className="p-5 space-y-4"
+        className="p-6 max-w-xl mx-auto flex flex-col gap-4 bg-white rounded-lg shadow-md mt-4 mb-20"
         onSubmit={(e) => {
           e.preventDefault();
           handleSubmit();
@@ -83,6 +87,7 @@ export default function AddMedicine() {
           value={count}
           setValue={seCount}
           type="number"
+          min={0}
         />
 
         <Input
@@ -98,6 +103,7 @@ export default function AddMedicine() {
           value={cost}
           setValue={setCost}
           type="number"
+          min={0}
         />
 
         <div className="flex justify-between mt-4">

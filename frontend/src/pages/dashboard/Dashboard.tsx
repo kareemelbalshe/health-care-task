@@ -6,7 +6,6 @@ import Header from "../../components/header/Header";
 import { IoCalendarSharp } from "react-icons/io5";
 import { FaMoneyCheckDollar } from "react-icons/fa6";
 import { FaInfoCircle } from "react-icons/fa";
-import { MdMonetizationOn } from "react-icons/md";
 
 export default function Dashboard() {
   const { isAuthenticated, user } = useSelector(

@@ -1,6 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../lib/redux/store";
-import { handleGetVisitsToPatient, handleUpdateVisitToPatient } from "../../lib/redux/slices/visitSlice";
+import {
+  handleGetVisitsToPatient,
+  handleUpdateVisitToPatient,
+} from "../../lib/redux/slices/visitSlice";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Pagination from "../../components/table/pagination/Pagination";
@@ -14,8 +17,10 @@ export default function VisitsToPatient() {
   );
 
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
-  const patientId = useSelector((state: RootState) => state.auth.user.user?._id);
+  const limit = 10;
+  const patientId = useSelector(
+    (state: RootState) => state.auth.user.user?._id
+  );
   useEffect(() => {
     if (error) toast.error(error);
   }, [error]);
@@ -32,16 +37,34 @@ export default function VisitsToPatient() {
 
   return (
     <div className="mb-20 flex flex-col gap-5 w-full lg:items-center p-6">
-        {loading && <Loader/>}
-        <AnyTable
+      {loading && <Loader />}
+      <AnyTable
         tbodys={patientVisits?.visits}
         titleHeader="Visits"
-        thead={["Status", "Payment Status", "Cost", "Created At", "Doctor", "Specialization"]}
-        headerData={["status", "paymentStatus", "cost", "createdAt","doctor.username","doctor[specialization]"]}
+        thead={[
+          "Status",
+          "Payment Status",
+          "Cost",
+          "Created At",
+          "Doctor",
+          "Specialization",
+        ]}
+        headerData={[
+          "status",
+          "paymentStatus",
+          "cost",
+          "createdAt",
+          "doctor.username",
+          "doctor[specialization]",
+        ]}
         view={true}
         linkView={`/dashboard/patient/view-visit/`}
         canc={true}
-        handleCancel={(id: string) => dispatch(handleUpdateVisitToPatient({ visitId: id, status: "canceled" }))}
+        handleCancel={(id: string) =>
+          dispatch(
+            handleUpdateVisitToPatient({ visitId: id, status: "canceled" })
+          )
+        }
       />
       <Pagination
         page={page}

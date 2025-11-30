@@ -146,7 +146,7 @@ export default function AnyTable({
                           className="w-10 h-10 mx-auto rounded-full bg-cover bg-center"
                           loading="lazy"
                         />
-                      ) : header === "createdAt" ? (
+                      ) : header === "createdAt" || header === "updatedAt" || header === "startDate" || header === "endDate" ? (
                         <span className="block max-w-xs px-2 overflow-hidden text-ellipsis whitespace-nowrap">
                           {new Date(row?.[header]).toLocaleDateString()}{" "}
                           {new Date(row?.[header]).toLocaleTimeString()}
