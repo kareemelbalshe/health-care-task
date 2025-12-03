@@ -65,10 +65,10 @@ export default function EditVisit() {
 
     const start = new Date(`${startDate}T${startTime}`);
     const end = new Date(`${endDate}T${endTime}`);
-    const now = new Date();
+    // const now = new Date();
 
-    if (start <= now) return toast.error("Start must be in the future");
-    if (end <= start) return toast.error("End must be after start");
+    // if (start <= now) return toast.error("Start must be in the future");
+    // if (end <= start) return toast.error("End must be after start");
 
     const data = {
       status,
